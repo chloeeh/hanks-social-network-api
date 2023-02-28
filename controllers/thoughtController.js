@@ -5,6 +5,7 @@ const { User, Thought } = require('../models');
 
 // GET all thoughts
 function getThoughts(req, res) {
+    // finds all thoughts (no filter applied) then converts into JSON format
     Thought.find({})
         .then((thought) => res.json(thought))
         .catch((err) => res.status(500).json(err));
@@ -12,7 +13,9 @@ function getThoughts(req, res) {
 
 // GET a single thought by id
 function getThoughtById(req, res) {
+    // find single thought based on _id; searches for the id parameter with a specific id value
     Thought.findOne({ _id: req.params.thoughtId })
+    // excludes the version associated with this command
         .select('-__v')
         .then((thought) =>
             !thought ? res.status(404).json({ message: 'There is no thought with this ID! 😭' }) : res.json(thought)
