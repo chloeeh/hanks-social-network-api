@@ -1,7 +1,33 @@
+/* ----------------------------------- THOUGHT ROUTES ----------------------------------- */
+/*  GET all Thoughts:               http://localhost:3001/api/thoughts
+    GET Thought by ID:              http://localhost:3001/api/thoughts/[insert thought ID here]
+    CREATE new Thought:             http://localhost:3001/api/thoughts/
+    UPDATE existing Thought by ID:  http://localhost:3001/api/thoughts/[insert thought ID here]
+    DELETE existing Thought by ID:  http://localhost:3001/api/thoughts/[insert thought ID here]
+
+    CREATE new Reaction:            http://localhost:3001/api/thoughts/[insert thought ID here]/reactions
+    DELETE Reaction by ID:          http://localhost:3001/api/thoughts/[insert thought ID here]/reactions/[insert reaction ID here]
+
+/* ----------------------------------- THOUGHT JSON BODIES ----------------------------------- */
+/* To CREATE a Thought, input the following in Insomnia:
+{
+	"thoughtText": "Not a single brain cell left lmao; help please",
+	"username": "Mertie.Marvin17",
+	"userId": "63fe39c51ab34120ca9a3c6f"
+}
+
+To UPDATE a Though, input the following in Insomnia: 
+/* Input the following in insomnia:
+{
+	"thoughtText": "Not a single brain cell111 left; this is an update rev001"
+}
+*/
+
+/* ----------------------------------- THOUGHTS ----------------------------------- */
+
 // Import data models for users, thoughts and reactions
 const { User, Thought } = require('../models');
 
-/* -------------------------------- thoughts -------------------------------- */
 
 // GET all thoughts
 function getThoughts(req, res) {
@@ -24,6 +50,7 @@ function getThoughtById(req, res) {
 }
 
 // Create a thought
+
 function createThought(req, res) {
     Thought.create(req.body)
         .then(({ _id }) => User.findOneAndUpdate({ _id: req.body.userId }, { $push: { thoughts: _id } }, { new: true }))
