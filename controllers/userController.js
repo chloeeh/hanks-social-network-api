@@ -1,7 +1,36 @@
+/* ----------------------------------- USER ROUTES ----------------------------------- */
+/*  GET all Users:               http://localhost:3001/api/users
+    GET User by ID:              http://localhost:3001/api/users/[insert user ID here]
+    CREATE new User:             http://localhost:3001/api/users/
+    UPDATE existing User by ID:  http://localhost:3001/api/users/[insert user ID here]
+    DELETE existing User by ID:  http://localhost:3001/api/users/[insert user ID here]
+
+    ADD new Friend:              http://localhost:3001/api/users/[insert user ID here]/friends
+    DELETE Friend by ID:         http://localhost:3001/api/users/[insert user ID here]/friends/[insert user ID here]
+
+/* ----------------------------------- USER JSON BODIES ----------------------------------- */
+/* To CREATE a new user, input the following in Insomnia JSON body:
+{
+	"username": "chloeeh",
+	"email": "chloe.e.hanks@gmail.com",
+	"thoughts": [],
+	"friends": [
+		"63fe39c51ab34120ca9a3c81"
+	]
+}
+
+To UPDATE an existing User, input the followin in Insomnia JSON body:
+{
+	"username": "chlosef"
+}
+*/
+
+/* ----------------------------------- USERS ----------------------------------- */
+
+
 // Import User and Thought models
 const { User, Thought } = require('../models');
 
-/* ---------------------------- user controllers ---------------------------- */
 // GET all users
 function getAllUsers(req, res) {
     User.find({})
@@ -22,6 +51,7 @@ function getUserById(req, res) {
 }
 
 // Create a user
+
 function createUser(req, res) {
     User.create(req.body)
         .then((user) => res.json(user))
